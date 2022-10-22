@@ -1,3 +1,48 @@
 <resources>
     <string name="app_name">Unscramble</string>
+
+    <string-array name="allWords">
+        <item>animal</item>
+        <item>auto</item>
+        <item>anecdote</item>
+        <item>alphabet</item>
+        <item>all</item>
+        <item>awesome</item>
+        <item>arise</item>
+        <item>balloon</item>
+        <item>basket</item>
+        <item>bench</item>
+        <item>best</item>
+        <item>birthday</item>
+        <item>book</item>
+        <item>briefcase</item>
+        <item>camera</item>
+        <item>camping</item>
+        <item>candle</item>
+        <item>cat</item>
+        <item>cauliflower</item>
+        <item>chat</item>
+        <item>children</item>
+        <item>class</item>
+        <item>classic</item>
+        <item>classroom</item>
+        <item>coffee</item>
+        <item>colorful</item>
+        <item>cookie</item>
+        <item>creative</item>
+        <item>cruise</item>
+        <item>dance</item>
+        <item>daytime</item>
+        <item>dinosaur</item>
+        <item>doorknob</item>
+        <item>dine</item>
+        <item>dream</item>
+        <item>dusk</item>
+        <item>eating</item>
+        <item>elephant</item>
+        <item>emerald</item>
+        <item>eerie</item>
+        <item>electric</item>
+        <item>finish</item>
+    </string-array>
 </resources>
