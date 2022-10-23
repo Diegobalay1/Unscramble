@@ -1,8 +1,6 @@
 package com.diego.kotlin.unscramble.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.OutlinedTextField
@@ -20,6 +18,27 @@ import com.diego.kotlin.unscramble.R
 @Composable
 fun GameScreen() {
 
+}
+
+@Composable
+fun GameStatus(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .size(48.dp)
+    ) {
+        Text(
+            text = stringResource(R.string.word_count, 0),
+            fontSize = 18.sp
+        )
+        Text(text = stringResource(R.string.score, 0),
+            fontSize = 18.sp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentWidth(Alignment.End)
+        )
+    }
 }
 
 @Composable
@@ -54,6 +73,11 @@ fun GameLayout(modifier: Modifier = Modifier) {
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun GameStatusPreview() {
+    GameStatus()
+}
 @Preview(showBackground = true)
 @Composable
 fun GameLayoutPreview() {
