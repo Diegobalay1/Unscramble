@@ -3,6 +3,8 @@ package com.diego.kotlin.unscramble.ui
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Button
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -73,14 +75,48 @@ fun GameLayout(modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+fun SubmitAndSkip(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(top = 16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        OutlinedButton(
+            onClick = {  },
+            modifier = Modifier
+                .weight(1f)
+                .padding(8.dp)
+        ) {
+            Text(text = stringResource(R.string.skip))
+        }
+        Button(
+            onClick = {  },
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .padding(8.dp)
+        ) {
+            Text(text = stringResource(R.string.submit) )
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun GameStatusPreview() {
     GameStatus()
 }
+
 @Preview(showBackground = true)
 @Composable
 fun GameLayoutPreview() {
     GameLayout()
+}
+@Preview(showBackground = true)
+@Composable
+fun SubmitAndSkipPreview() {
+    SubmitAndSkip()
 }
 
