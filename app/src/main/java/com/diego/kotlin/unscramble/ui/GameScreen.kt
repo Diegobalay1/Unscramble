@@ -1,8 +1,10 @@
 package com.diego.kotlin.unscramble.ui
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.OutlinedTextField
@@ -18,8 +20,19 @@ import androidx.compose.ui.unit.sp
 import com.diego.kotlin.unscramble.R
 
 @Composable
-fun GameScreen() {
-
+fun GameScreen(
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        GameStatus()
+        GameLayout()
+        GameSubmitAndSkip()
+    }
 }
 
 @Composable
@@ -76,7 +89,7 @@ fun GameLayout(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun SubmitAndSkip(modifier: Modifier = Modifier) {
+fun GameSubmitAndSkip(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -105,6 +118,12 @@ fun SubmitAndSkip(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
+fun GameScreenPreview() {
+    GameScreen()
+}
+
+@Preview(showBackground = true)
+@Composable
 fun GameStatusPreview() {
     GameStatus()
 }
@@ -116,7 +135,7 @@ fun GameLayoutPreview() {
 }
 @Preview(showBackground = true)
 @Composable
-fun SubmitAndSkipPreview() {
-    SubmitAndSkip()
+fun GameSubmitAndSkipPreview() {
+    GameSubmitAndSkip()
 }
 
