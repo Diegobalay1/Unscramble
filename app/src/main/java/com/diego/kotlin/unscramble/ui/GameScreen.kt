@@ -1,17 +1,16 @@
 package com.diego.kotlin.unscramble.ui
 
+import android.app.Activity
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
@@ -116,6 +115,38 @@ fun GameSubmitAndSkip(modifier: Modifier = Modifier) {
     }
 }
 
+// TODO 1.0 Implementar ShowFinalScoreDialog
+@Composable
+private fun ShowFinalScoreDialog(
+    onPlayAgain: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val activity = (LocalContext.current as Activity)
+
+    AlertDialog(
+        onDismissRequest = {
+        // Dismiss the dialog when the user clicks outside the dialog or on the back
+        // button. If you want to disable that functionality, simply use an empty
+        // onCloseRequest.
+    },
+        title = { Text(stringResource(R.string.congratulations)) },
+        text = { Text(stringResource(R.string.you_scored, 0)) },
+        dismissButton = {
+            TextButton(onClick = { activity.finish() }) {
+                Text(text = stringResource(id = R.string.exit))
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = {
+                onPlayAgain()
+            }) {
+                Text(text = stringResource(R.string.play_again))
+            }
+        },
+        modifier = modifier
+    )
+}
+
 @Preview(showBackground = true)
 @Composable
 fun GameScreenPreview() {
@@ -133,9 +164,11 @@ fun GameStatusPreview() {
 fun GameLayoutPreview() {
     GameLayout()
 }
+
 @Preview(showBackground = true)
 @Composable
 fun GameSubmitAndSkipPreview() {
     GameSubmitAndSkip()
 }
+
 
