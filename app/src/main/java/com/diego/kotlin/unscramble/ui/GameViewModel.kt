@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import com.diego.kotlin.unscramble.data.SCORE_INCREASE
 import kotlinx.coroutines.flow.update
 
 class GameViewModel: ViewModel() {
@@ -63,18 +64,42 @@ class GameViewModel: ViewModel() {
 
     fun checkUserGuess() {
         if (userGuess.equals(currentWord, ignoreCase = true)) {
-
+            val updatedScore = _uiState.value.score.plus(SCORE_INCREASE)
+            updateGameState(updatedScore)
         } else {
             // User's guess is wrong, show an error
             _uiState.update { currentGameUiState ->
                 currentGameUiState.copy(
-                    isGuessedWordWrong = true
+                    isGuessedWordWrong = true,
+                    currentWordCount = currentGameUiState.currentWordCount.inc()
                 )
             }
         }
         // Reset user guess
         updateUserGuess("")
     }
+
+    private fun updateGameState(updatedScore: Int) {
+        _uiState.update { currentGameUiState ->
+            currentGameUiState.copy(
+                isGuessedWordWrong = false,
+                currentScrambledWord = pickRandomWordAndShuffle(),
+                score = updatedScore,
+                currentWordCount = currentGameUiState.currentWordCount.inc()
+            )
+        }
+    }
+
+    fun skipWord() {
+        updateGameState(_uiState.value.score)
+        // Reset user guess
+        updateUserGuess("")
+    }
+
+    // TODO 4.0 - 8. Pasa la puntuación y la cantidad de palabras
+    // TODO 4.1 - 8. Para implementar la funcionalidad de omisión
+
+    // TODO 5.0 - 9. Controla la última ronda del juego
 
 }
 // TODO 3.0 - 6. Crea la arquitectura de tu IU de Compose

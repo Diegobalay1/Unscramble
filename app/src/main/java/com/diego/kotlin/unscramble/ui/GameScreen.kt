@@ -35,7 +35,10 @@ fun GameScreen(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        GameStatus()
+        GameStatus(
+            wordCount = gameUiState.currentWordCount,
+            score = gameUiState.score
+        )
         GameLayout(
             isGuessWrong = gameUiState.isGuessedWordWrong,
             userGuess = gameViewModel.userGuess,
@@ -44,13 +47,18 @@ fun GameScreen(
             currentScrambledWord = gameUiState.currentScrambledWord
         )
         GameSubmitAndSkip(
-            checkUserGuess = { gameViewModel.checkUserGuess() }
+            checkUserGuess = { gameViewModel.checkUserGuess() },
+            skipUserWord = { gameViewModel.skipWord() }
         )
     }
 }
 
 @Composable
-fun GameStatus(modifier: Modifier = Modifier) {
+fun GameStatus(
+    wordCount: Int,
+    score: Int,
+    modifier: Modifier = Modifier
+) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -58,10 +66,10 @@ fun GameStatus(modifier: Modifier = Modifier) {
             .size(48.dp)
     ) {
         Text(
-            text = stringResource(R.string.word_count, 0),
+            text = stringResource(R.string.word_count, wordCount),
             fontSize = 18.sp
         )
-        Text(text = stringResource(R.string.score, 0),
+        Text(text = stringResource(R.string.score, score),
             fontSize = 18.sp,
             modifier = Modifier
                 .fillMaxWidth()
@@ -118,6 +126,7 @@ fun GameLayout(
 @Composable
 fun GameSubmitAndSkip(
     checkUserGuess: () -> Unit,
+    skipUserWord: () -> Unit,
     modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
@@ -126,7 +135,7 @@ fun GameSubmitAndSkip(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         OutlinedButton(
-            onClick = {  },
+            onClick = { skipUserWord() },
             modifier = Modifier
                 .weight(1f)
                 .padding(8.dp)
