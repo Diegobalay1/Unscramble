@@ -25,8 +25,8 @@ import com.diego.kotlin.unscramble.R
 
 @Composable
 fun GameScreen(
-    gameViewModel: GameViewModel = viewModel(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    gameViewModel: GameViewModel = viewModel()
 ) {
     val gameUiState by gameViewModel.uiState.collectAsState()
     Column(
@@ -37,12 +37,15 @@ fun GameScreen(
     ) {
         GameStatus()
         GameLayout(
+            isGuessWrong = gameUiState.isGuessedWordWrong,
             userGuess = gameViewModel.userGuess,
             onUserGuessChanged = { gameViewModel.updateUserGuess(it) },
-            onKeyboardDone = { },
+            onKeyboardDone = { gameViewModel.checkUserGuess() },
             currentScrambledWord = gameUiState.currentScrambledWord
         )
-        GameSubmitAndSkip()
+        GameSubmitAndSkip(
+            checkUserGuess = { gameViewModel.checkUserGuess() }
+        )
     }
 }
 
@@ -69,6 +72,7 @@ fun GameStatus(modifier: Modifier = Modifier) {
 
 @Composable
 fun GameLayout(
+    isGuessWrong: Boolean,
     userGuess: String,
     onUserGuessChanged: (String) -> Unit,
     onKeyboardDone: () -> Unit,
@@ -93,8 +97,14 @@ fun GameLayout(
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
             onValueChange = onUserGuessChanged,
-            label = { Text(stringResource(R.string.enter_your_word)) },
-            isError = false,
+            label = {
+                if (isGuessWrong) {
+                    Text(stringResource(R.string.wrong_guess))
+                } else {
+                    Text(stringResource(R.string.enter_your_word))
+                }
+            },
+            isError = isGuessWrong,
             keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Done
             ),
@@ -106,7 +116,9 @@ fun GameLayout(
 }
 
 @Composable
-fun GameSubmitAndSkip(modifier: Modifier = Modifier) {
+fun GameSubmitAndSkip(
+    checkUserGuess: () -> Unit,
+    modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -122,7 +134,9 @@ fun GameSubmitAndSkip(modifier: Modifier = Modifier) {
             Text(text = stringResource(R.string.skip))
         }
         Button(
-            onClick = {  },
+            onClick = {
+                  checkUserGuess()
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
