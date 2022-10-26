@@ -26,9 +26,6 @@ class GameViewModel: ViewModel() {
     var userGuess by mutableStateOf("")
         private set
 
-    var userAction by mutableStateOf(0)
-        private set
-
     init {
         resetGame()
     }
@@ -119,7 +116,6 @@ class GameViewModel: ViewModel() {
 
 }
 // TODO 3.0 - 6. Crea la arquitectura de tu IU de Compose
-
 
 
 

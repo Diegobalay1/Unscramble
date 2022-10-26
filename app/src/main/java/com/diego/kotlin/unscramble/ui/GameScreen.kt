@@ -7,9 +7,8 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -150,7 +149,7 @@ fun GameSubmitAndSkip(
         }
         Button(
             onClick = {
-                  checkUserGuess()
+                checkUserGuess()
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -174,10 +173,10 @@ private fun ShowFinalScoreDialog(
 
     AlertDialog(
         onDismissRequest = {
-        // Dismiss the dialog when the user clicks outside the dialog or on the back
-        // button. If you want to disable that functionality, simply use an empty
-        // onCloseRequest.
-    },
+            // Dismiss the dialog when the user clicks outside the dialog or on the back
+            // button. If you want to disable that functionality, simply use an empty
+            // onCloseRequest.
+        },
         title = { Text(stringResource(R.string.congratulations)) },
         text = { Text(stringResource(R.string.you_scored, score)) },
         dismissButton = {
@@ -201,23 +200,19 @@ private fun ShowFinalScoreDialog(
 fun GameScreenPreview() {
     GameScreen()
 }
-
 @Preview(showBackground = true)
 @Composable
 fun GameStatusPreview() {
     GameStatus()
 }
-
 @Preview(showBackground = true)
 @Composable
 fun GameLayoutPreview() {
     //GameLayout()
 }
-
 @Preview(showBackground = true)
 @Composable
 fun GameSubmitAndSkipPreview() {
     GameSubmitAndSkip()
 }*/
-
 
