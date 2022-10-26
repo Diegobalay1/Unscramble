@@ -26,6 +26,9 @@ class GameViewModel: ViewModel() {
     var userGuess by mutableStateOf("")
         private set
 
+    var userAction by mutableStateOf(0)
+        private set
+
     init {
         resetGame()
     }
