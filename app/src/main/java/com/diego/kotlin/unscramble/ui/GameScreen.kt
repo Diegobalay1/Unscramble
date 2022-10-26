@@ -50,6 +50,12 @@ fun GameScreen(
             checkUserGuess = { gameViewModel.checkUserGuess() },
             skipUserWord = { gameViewModel.skipWord() }
         )
+        if (gameUiState.isGameOver) {
+            ShowFinalScoreDialog(
+                score = gameUiState.score,
+                onPlayAgain = { gameViewModel.resetGame() }
+            )
+        }
     }
 }
 
@@ -160,6 +166,7 @@ fun GameSubmitAndSkip(
 // TODO 2.0 - 4.Obtén información sobre la arquitectura de la app
 @Composable
 private fun ShowFinalScoreDialog(
+    score: Int,
     onPlayAgain: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -172,7 +179,7 @@ private fun ShowFinalScoreDialog(
         // onCloseRequest.
     },
         title = { Text(stringResource(R.string.congratulations)) },
-        text = { Text(stringResource(R.string.you_scored, 0)) },
+        text = { Text(stringResource(R.string.you_scored, score)) },
         dismissButton = {
             TextButton(onClick = { activity.finish() }) {
                 Text(text = stringResource(id = R.string.exit))
