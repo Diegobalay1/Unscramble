@@ -42,6 +42,7 @@ class GameViewModel: ViewModel() {
         }
     }
 
+
     private fun shuffleCurrentWord(word: String): String {
         val tempWord = word.toCharArray()
         // Scramble the word
@@ -64,24 +65,41 @@ class GameViewModel: ViewModel() {
     }
 
     fun checkUserGuess() {
-        if (userGuess.equals(currentWord, ignoreCase = true)) {
-            val updatedScore = _uiState.value.score.plus(SCORE_INCREASE)
-            updateGameState(updatedScore)
-        } else {
-            // User's guess is wrong, show an error
-            _uiState.update { currentGameUiState ->
-                currentGameUiState.copy(
-                    isGuessedWordWrong = true,
-                    //currentWordCount = currentGameUiState.currentWordCount.inc()
-                )
+        if (userGuess != "") {
+            if (userGuess.equals(currentWord, ignoreCase = true)) {
+                val updatedScore = _uiState.value.score.plus(SCORE_INCREASE)
+                updateGameState(updatedScore)
+            } else {
+                // User's guess is wrong, show an error
+                if (usedWords.size < MAX_NO_OF_WORDS) {
+                    _uiState.update { currentGameUiState ->
+                        currentGameUiState.copy(
+                            isGuessedWordWrong = true,
+                            currentWordCount = currentGameUiState.currentWordCount.inc()
+                        )
+                    }
+                    usedWords.add(userGuess)
+                } else {
+                    lastRound()
+                }
             }
+            // Reset user guess
+            updateUserGuess("")
         }
-        // Reset user guess
-        updateUserGuess("")
+    }
+
+    private fun lastRound() {
+        _uiState.update { currentGameUiState ->
+            currentGameUiState.copy(
+                isGameOver = true,
+                score = _uiState.value.score,
+                isGuessedWordWrong = false
+            )
+        }
     }
 
     private fun updateGameState(updatedScore: Int) {
-        if (usedWords.size == MAX_NO_OF_WORDS) {
+        if (usedWords.size >= MAX_NO_OF_WORDS) {
             //Last round in the game, update isGameOver to true, don't pick a new word
             _uiState.update { currentGameUiState ->
                 currentGameUiState.copy(
