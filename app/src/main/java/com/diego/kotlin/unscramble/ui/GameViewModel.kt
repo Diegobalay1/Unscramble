@@ -80,7 +80,8 @@ class GameViewModel: ViewModel() {
                     }
                     usedWords.add(userGuess)
                 } else {
-                    lastRound()
+                    lastRound(if(userGuess.equals(currentWord, true)) _uiState.value.score.plus(
+                        SCORE_INCREASE) else _uiState.value.score)
                 }
             }
             // Reset user guess
@@ -88,11 +89,11 @@ class GameViewModel: ViewModel() {
         }
     }
 
-    private fun lastRound() {
+    private fun lastRound(updatedScore: Int) {
         _uiState.update { currentGameUiState ->
             currentGameUiState.copy(
                 isGameOver = true,
-                score = _uiState.value.score,
+                score = updatedScore,
                 isGuessedWordWrong = false
             )
         }
@@ -101,13 +102,14 @@ class GameViewModel: ViewModel() {
     private fun updateGameState(updatedScore: Int) {
         if (usedWords.size >= MAX_NO_OF_WORDS) {
             //Last round in the game, update isGameOver to true, don't pick a new word
-            _uiState.update { currentGameUiState ->
+            /*_uiState.update { currentGameUiState ->
                 currentGameUiState.copy(
                     isGameOver = true,
                     score = updatedScore,
                     isGuessedWordWrong = false
                 )
-            }
+            }*/
+            lastRound(updatedScore)
         } else {
             // Normal round in the game
             _uiState.update { currentGameUiState ->
